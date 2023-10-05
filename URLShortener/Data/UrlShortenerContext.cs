@@ -1,4 +1,4 @@
-﻿namespace ShorterURL.Data
+﻿namespace URLShortener.Data
 {
     public class UrlShortenerContext
     {

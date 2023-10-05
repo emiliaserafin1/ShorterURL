@@ -1,4 +1,4 @@
-namespace ShorterURL
+namespace URLShortener
 {
     public class Program
     {

@@ -1,4 +1,4 @@
-﻿namespace ShorterURL.Entities
+﻿namespace URLShortener.Entities
 {
     public class XYZ
     {
