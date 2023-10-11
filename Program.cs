@@ -1,3 +1,8 @@
+using URLShortener.Data;
+using Microsoft.EntityFrameworkCore;
+using URLShortener.Data.Implementations;
+
+
 namespace URLShortener
 {
     public class Program
@@ -12,6 +17,9 @@ namespace URLShortener
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<UrlShortenerContext>(dbContextOptions => dbContextOptions.UseSqlite(
+                builder.Configuration["ConnectionStrings:DefaultConnection"]));
+            builder.Services.AddScoped<UrlRepository>();
 
             var app = builder.Build();
 
