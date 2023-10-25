@@ -9,5 +9,4 @@ namespace URLShortener.Data.Interfaces
         void AddUrl(Url url);
         void SaveChanges();
     }
-
 }

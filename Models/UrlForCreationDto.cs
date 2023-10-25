@@ -2,7 +2,7 @@
 {
     public class UrlForCreationDto
     {
-        public int Id { get; set; }
+        public int CategoryId { get; set; }
         public string LongUrl { get; set; }
     }
 }

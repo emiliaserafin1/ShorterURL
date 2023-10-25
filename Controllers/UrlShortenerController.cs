@@ -47,7 +47,8 @@ namespace URLShortener.Controllers
             Url urlEntity = new Url
             {
                 LongUrl = urlForCreation.LongUrl,
-                ShortUrl = shortUrl
+                ShortUrl = shortUrl,
+                CategoryId = urlForCreation.CategoryId
             };
 
             // Agregar la entidad URL a la base de datos
@@ -68,7 +69,7 @@ namespace URLShortener.Controllers
             {
                 return NotFound(); // Si no se encuentra la URL, devuelve un código 404 (Not Found)
             }
-
+            _urlRepository.IncrementClickCounter(url.Id);
             // Realizar la redirección a la URL original
             return Redirect(url.LongUrl);
             

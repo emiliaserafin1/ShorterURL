@@ -33,5 +33,18 @@ namespace URLShortener.Data.Implementations
         {
             _context.SaveChanges();
         }
+        
+        public void IncrementClickCounter(int id)
+        {
+            var url = _context.Urls.FirstOrDefault(u => u.Id == id);
+
+            if (url != null)
+            {
+                url.ClickCounter++;
+                _context.SaveChanges();
+            }
+        }
+
+
     }
 }
