@@ -7,6 +7,7 @@ namespace URLShortener.Data
     {
         public DbSet<Url> Urls { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<User> Users { get; set; }  
         public UrlShortenerContext(DbContextOptions<UrlShortenerContext> options) : base(options) { } //Acá estamos llamando al constructor de DbContext que es el que acepta las opciones
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -21,6 +22,11 @@ namespace URLShortener.Data
                 new Category() { Id = 2, Name = "Plataforma streaming" },
                 new Category() { Id = 3, Name = "Peliculas" }
             );
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Urls)
+                .WithOne(ur => ur.User)
+                .HasForeignKey(ur => ur.UserId);
             base.OnModelCreating(modelBuilder);
         }
     }

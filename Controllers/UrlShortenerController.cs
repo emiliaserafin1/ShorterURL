@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Emit;
 using System.Text;
 using URLShortener.Data.Implementations;
+using URLShortener.Data.Interfaces;
 using URLShortener.Entities;
+using URLShortener.Helpers;
 using URLShortener.Models;
 
 namespace URLShortener.Controllers
@@ -10,9 +14,9 @@ namespace URLShortener.Controllers
     [ApiController]
     public class UrlShortenerController : ControllerBase
     {
-        private readonly UrlRepository _urlRepository;
+        private readonly IUrlService _urlRepository;
 
-        public UrlShortenerController(UrlRepository urlRepository)
+        public UrlShortenerController(IUrlService urlRepository)
         {
             _urlRepository = urlRepository;
         }
@@ -40,15 +44,16 @@ namespace URLShortener.Controllers
             {
                 return BadRequest();
             }
-
-            string shortUrl = GenerateShortUrl();
+            ShortUrlGenerator ShortUrl = new ShortUrlGenerator();
+            string shortUrl = ShortUrl.GenerateShortUrl();
 
             // Crear una nueva entidad URL con la URL original y la URL corta
             Url urlEntity = new Url
             {
                 LongUrl = urlForCreation.LongUrl,
                 ShortUrl = shortUrl,
-                CategoryId = urlForCreation.CategoryId
+                CategoryId = urlForCreation.CategoryId,
+                UserId = urlForCreation.UserId
             };
 
             // Agregar la entidad URL a la base de datos
@@ -73,22 +78,6 @@ namespace URLShortener.Controllers
             // Realizar la redirección a la URL original
             return Redirect(url.LongUrl);
             
-        }
-
-        // Generador de URL corta
-        private readonly string AllowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        private string GenerateShortUrl()
-        {
-            Random random = new Random();
-            StringBuilder ShortUrl = new StringBuilder();
-
-            for (int i = 0; i < 6; i++)
-            {
-                int indice = random.Next(AllowedCharacters.Length);
-                ShortUrl.Append(AllowedCharacters[indice]);
-            }
-
-            return ShortUrl.ToString();
         }
     }
 }

@@ -5,11 +5,11 @@ using URLShortener.Entities;
 
 namespace URLShortener.Data.Implementations
 {
-    public class UrlRepository : IUrlRepository
+    public class UrlService : IUrlService
     {
         private readonly UrlShortenerContext _context;
 
-        public UrlRepository(UrlShortenerContext context)
+        public UrlService(UrlShortenerContext context)
         {
             _context = context;
         }
